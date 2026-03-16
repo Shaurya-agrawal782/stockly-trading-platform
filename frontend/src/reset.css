@@ -1,0 +1,22 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+}
+
+/* Remove default Bootstrap container side gutters */
+.container,
+.container-fluid {
+  max-width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
