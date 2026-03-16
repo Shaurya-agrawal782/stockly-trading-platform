@@ -1,10 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
+import './reset.css'
+import HomePage from './landing_page/home/HomePage'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <h1>hi i am shaurya</h1>
+    <HomePage/>
   </StrictMode>,
 )
