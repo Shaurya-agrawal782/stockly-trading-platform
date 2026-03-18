@@ -1,7 +1,7 @@
 import React from 'react';
 function Award () {
     return ( 
-        <div className="container">
+        <div className="container p-5">
             <div className="row">
                 <div className="col-6">
                    <img src='/Assets/largestBroker.svg' className='img-fluid mx-0 mb-4'/>

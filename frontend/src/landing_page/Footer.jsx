@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.css';
 function Footer() {
     return (
-      <div className="container border-top mt-5" style={{backgroundColor:"rgb(240, 240, 240)"}}>
+      <div className="container border-top mt-5 p-5" style={{backgroundColor:"rgb(240, 240, 240)"}}>
         <div className="row mt-5">
           <div className="col">
             <img src="/Assets/logo.svg" style={{ width: "50%" }} alt="logo" />
@@ -71,19 +71,19 @@ function Footer() {
           Registered Address: Zerodha Broking Ltd., #153/154, 4th Cross, Dollars
           Colony, Opp. Clarence Public School, J.P Nagar 4th Phase, Bengaluru -
           560078, Karnataka, India. For any complaints pertaining to securities
-          broking please write to complaints@zerodha.com, for DP related to
-          dp@zerodha.com. Please ensure you carefully read the Risk Disclosure
+          broking please write to <a href="">complaints@zerodha.com</a>, for DP related to
+         <a href=""> dp@zerodha.com</a>. Please ensure you carefully read the Risk Disclosure
           Document as prescribed by SEBI | ICF{" "}
         </p>
 
         <p>
-          Procedure to file a complaint on SEBI SCORES: Register on SCORES
+          Procedure to file a complaint on <a href="">SEBI SCORES:</a> Register on SCORES
           portal. Mandatory details for filing complaints on SCORES: Name, PAN,
           Address, Mobile Number, E-mail ID. Benefits: Effective Communication,
           Speedy redressal of the grievances
         </p>
 
-        <p>Smart Online Dispute Resolution | Grievances Redressal Mechanism</p>
+        <p><a href="">Smart Online Dispute Resolution </a>|<a href=""> Grievances Redressal Mechanism</a></p>
 
         <p>
           Investments in securities market are subject to market risks; read all
@@ -101,8 +101,8 @@ function Footer() {
         </p>
 
         <p>
-          India's largest broker based on networth as per NSE. NSE broker
-          factsheet
+          India's largest broker based on networth as per NSE. <a href="">NSE broker
+          factsheet</a>
         </p>
 
         <p>
@@ -120,7 +120,7 @@ function Footer() {
           in your bank account. As a business we don't give stock tips, and have
           not authorized anyone to trade on behalf of others. If you find anyone
           claiming to be part of Zerodha and offering such services, please
-          create a ticket here.
+          <a href=""> create a ticket here.</a>
         </p>
 
         <p>

@@ -1,7 +1,7 @@
 import React from "react";
 function Pricing() {
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 p-5">
       <div className="row">
         <div className="col-4">
           <h1 className="mb-3  mt-4">Unbeatable pricing</h1>

@@ -1,7 +1,7 @@
 import React from 'react';
 function Stats() {
     return ( 
-       <div className="container">
+       <div className="container p-5">
         <div className="row">
             <div className="col-6">
                <h1 className='mb-5 mt-5'>Trust with confidence</h1>

@@ -1,8 +1,11 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+
+
 function Navbar() {
     return (
       <div className="container">
-        <nav className="navbar navbar-expand-lg bg-white">
+        <nav className="navbar fixed-top navbar-expand-lg bg-white">
           <div className="container-fluid">
             <button
               className="navbar-toggler"
@@ -17,34 +20,35 @@ function Navbar() {
             </button>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 
-              <a className="navbar-brand" href="#">
+              <Link className="navbar-brand" to='/'>
                 <img src="/Assets/logo.svg" style={{width:"25%"}} alt='logo'  />
-              </a>
+              </Link>
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3">
+                
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
-                    Home
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link active" href="#">
+                  <Link className="nav-link active" to="/signup">
                     Signup
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="#">
+                  <Link className="nav-link active" to="/about">
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="#">
+                  <Link className="nav-link active" to="/product">
                     Products
-                  </a>
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active" href="#">
+                  <Link className="nav-link active" aria-current="page" to="/pricing">
+                    Pricing
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/support">
                     Support
-                  </a>
+                  </Link>
                 </li>
                 
               </ul>

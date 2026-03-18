@@ -2,7 +2,7 @@ import React from 'react';
 
 function Education() {
     return ( 
-        <div className="container">
+        <div className="container p-5">
             <div className="row">
                 <div className="col-6">
                 <img src='/Assets/education.svg' className='img-fluid mx-0 mt-5'/>
