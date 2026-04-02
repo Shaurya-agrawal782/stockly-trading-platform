@@ -1,0 +1,14 @@
+#supportHero{
+    background-color:#3F84E5;
+}
+#supportHero a{
+    color: white;
+}
+#support{
+    color: white;
+}
+
+#supportHero input{
+    padding: 20px 150px;
+    border-radius: 10px;
+}

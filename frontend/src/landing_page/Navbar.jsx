@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 
 function Navbar() {
     return (
-      <div className="container">
+      <div className="container mb-5 p-2">
         <nav className="navbar fixed-top navbar-expand-lg bg-white">
-          <div className="container-fluid">
+          <div className="container-fluid border-bottom p-1">
             <button
               className="navbar-toggler"
               type="button"
