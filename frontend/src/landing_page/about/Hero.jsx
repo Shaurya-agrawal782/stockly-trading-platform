@@ -5,7 +5,7 @@ function Hero() {
       <div className="row mt-5 mb-5">
         <h1 className="fs-3 text-center mt-5 mb-5">
           We believe that investing and trading should be <br /> simple,
-          transparent, and accessible to everyone.
+          transparent, and accessible to everyone 1.
         </h1>
       </div>
       <div className="row mt-5 border-top ">
