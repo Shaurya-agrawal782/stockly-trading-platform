@@ -4,17 +4,33 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
+const authRoute = require("./Routes/AuthRoute");
 
 const {HoldingsModel}= require('./model/HoldingsModel');
 const {PositionsModel}= require('./model/PositionsModel');
+const {OrdersModel}= require('./model/OrdersModel');
+const {FundsModel}= require('./model/FundsModel');
+const { requireAuth } = require('./Middlewares/AuthMiddleware');
 
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
 const app = express();
 
-app.use(cors());
+// CORS configuration for credentials
+const corsOptions = {
+  origin: ['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'http://127.0.0.1:5173'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(express.json());
+app.use("/", authRoute);
 
 
 mongoose.connect(uri)
@@ -67,17 +83,159 @@ mongoose.connect(uri)
 
 
 
-app.get('/allHoldings', async(req,res)=>{
-   let allHoldings = await HoldingsModel.find({});
-   res.json(allHoldings);
-
+app.get('/holdings', requireAuth, async (req, res) => {
+  const holdings = await HoldingsModel.find({ userId: req.user._id });
+  res.json(holdings);
 });
 
+app.get('/positions', requireAuth, async (req, res) => {
+  const positions = await PositionsModel.find({ userId: req.user._id });
+  res.json(positions);
+});
 
-app.get('/allPositions', async(req,res)=>{
-   let allPositions = await PositionsModel.find({});
-   res.json(allPositions);
+app.get('/orders', requireAuth, async (req, res) => {
+  const orders = await OrdersModel.find({ userId: req.user._id }).sort({ createdAt: -1 });
+  res.json(orders);
+});
 
+app.get('/funds', requireAuth, async (req, res) => {
+  let funds = await FundsModel.findOne({ userId: req.user._id });
+  if (!funds) {
+    funds = await FundsModel.create({ userId: req.user._id });
+  }
+  res.json(funds);
+});
+
+app.post('/funds/add', requireAuth, async (req, res) => {
+  const amount = Number(req.body.amount);
+  if (!amount || amount <= 0) {
+    return res.status(400).json({ success: false, message: 'Amount must be greater than 0.' });
+  }
+
+  let funds = await FundsModel.findOne({ userId: req.user._id });
+  if (!funds) {
+    funds = await FundsModel.create({ userId: req.user._id });
+  }
+
+  funds.availableCash += amount;
+  funds.availableMargin += amount;
+  funds.openingBalance += amount;
+  funds.payin += amount;
+  await funds.save();
+
+  res.json({ success: true, funds });
+});
+
+app.post('/funds/withdraw', requireAuth, async (req, res) => {
+  const amount = Number(req.body.amount);
+  if (!amount || amount <= 0) {
+    return res.status(400).json({ success: false, message: 'Amount must be greater than 0.' });
+  }
+
+  let funds = await FundsModel.findOne({ userId: req.user._id });
+  if (!funds) {
+    funds = await FundsModel.create({ userId: req.user._id });
+  }
+
+  if (amount > funds.availableCash) {
+    return res.status(400).json({ success: false, message: 'Insufficient available cash to withdraw.' });
+  }
+
+  funds.availableCash -= amount;
+  funds.availableMargin = Math.max(0, funds.availableMargin - amount);
+  funds.openingBalance = Math.max(0, funds.openingBalance - amount);
+  await funds.save();
+
+  res.json({ success: true, funds });
+});
+
+app.post('/newOrder', requireAuth, async (req, res) => {
+  const { name, qty, price, mode } = req.body;
+
+  if (!name || !qty || !price || !mode) {
+    return res.status(400).json({ error: 'Missing order fields' });
+  }
+
+  const order = new OrdersModel({
+    userId: req.user._id,
+    name,
+    qty,
+    price,
+    mode,
+  });
+
+  await order.save();
+
+  const holding = await HoldingsModel.findOne({ userId: req.user._id, name });
+  const qtyNumber = Number(qty);
+  const priceNumber = Number(price);
+
+  if (mode === 'BUY') {
+    if (holding) {
+      const totalCost = holding.avg * holding.qty + priceNumber * qtyNumber;
+      const newQty = holding.qty + qtyNumber;
+      holding.qty = newQty;
+      holding.avg = totalCost / newQty;
+      holding.price = priceNumber;
+      holding.net = `${((priceNumber / holding.avg - 1) * 100).toFixed(2)}%`;
+      holding.day = `${((priceNumber / holding.avg - 1) * 100).toFixed(2)}%`;
+      holding.isLoss = priceNumber < holding.avg;
+      await holding.save();
+    } else {
+      await HoldingsModel.create({
+        userId: req.user._id,
+        name,
+        qty: qtyNumber,
+        avg: priceNumber,
+        price: priceNumber,
+        net: '+0.00%',
+        day: '+0.00%',
+        isLoss: false,
+      });
+    }
+  } else if (mode === 'SELL') {
+    if (holding) {
+      const remainingQty = holding.qty - qtyNumber;
+      if (remainingQty <= 0) {
+        await HoldingsModel.deleteOne({ _id: holding._id });
+      } else {
+        holding.qty = remainingQty;
+        holding.price = priceNumber;
+        holding.net = `${((priceNumber / holding.avg - 1) * 100).toFixed(2)}%`;
+        holding.day = `${((priceNumber / holding.avg - 1) * 100).toFixed(2)}%`;
+        holding.isLoss = priceNumber < holding.avg;
+        await holding.save();
+      }
+    }
+  }
+
+  let position = await PositionsModel.findOne({ userId: req.user._id, name });
+  if (!position) {
+    position = await PositionsModel.create({
+      userId: req.user._id,
+      product: 'EQ',
+      name,
+      qty: qtyNumber,
+      avg: priceNumber,
+      price: priceNumber,
+      net: `${((priceNumber / priceNumber - 1) * 100).toFixed(2)}%`,
+      day: '+0.00%',
+      isLoss: false,
+    });
+  } else {
+    position.qty = mode === 'BUY' ? position.qty + qtyNumber : Math.max(0, position.qty - qtyNumber);
+    position.price = priceNumber;
+    position.net = `${((priceNumber / position.avg - 1) * 100).toFixed(2)}%`;
+    position.day = `${((priceNumber / position.avg - 1) * 100).toFixed(2)}%`;
+    position.isLoss = priceNumber < position.avg;
+    if (position.qty <= 0) {
+      await PositionsModel.deleteOne({ _id: position._id });
+    } else {
+      await position.save();
+    }
+  }
+
+  res.json({ success: true, order });
 });
 
 app.listen(PORT, () => {

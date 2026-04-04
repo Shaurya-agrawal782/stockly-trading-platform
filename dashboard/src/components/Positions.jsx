@@ -7,10 +7,13 @@ const Positions = () => {
   const [allPositions, setAllPositions] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allPositions").then((res) => {
-      // console.log(res.data);
-      setAllPositions(res.data);
-    });
+    const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    axios
+      .get(`${backendURL}/positions`, { withCredentials: true })
+      .then((res) => {
+        setAllPositions(res.data);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   return (

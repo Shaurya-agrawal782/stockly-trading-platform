@@ -218,4 +218,146 @@
     background: #9b9b9b;
     color: #fff;
   }
+
+.buy-window-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 24px;
+}
+
+.buy-window {
+  width: min(500px, 100%);
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.buy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 24px;
+  background: #4184f3;
+  color: #ffffff;
+}
+
+.trade-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.trade-subtitle {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.close-btn {
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.buy-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px 0;
+  background: #f9fbff;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #4d4d4d;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #ffffff;
+  border-color: #d9e4fb;
+  color: #182f5f;
+}
+
+.radio-row {
+  display: flex;
+  gap: 12px;
+  padding: 18px 24px 0;
+  flex-wrap: wrap;
+}
+
+.radio-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  background: #fbfbfb;
+}
+
+.radio-pill input {
+  accent-color: #4184f3;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 18px 24px;
+}
+
+.inputs fieldset {
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.inputs fieldset legend {
+  padding: 0 6px;
+  font-size: 0.8rem;
+  color: #7d7d7d;
+}
+
+.inputs fieldset input {
+  width: 100%;
+  border: none;
+  outline: none;
+  margin-top: 8px;
+  font-size: 1rem;
+  background: transparent;
+}
+
+.order-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px 24px;
+}
+
+.order-footer span {
+  font-size: 0.95rem;
+  color: #5b5b5b;
+}
+
+.order-status {
+  margin: 0 24px 18px;
+  color: #4184f3;
+  font-size: 0.9rem;
+}
+
   

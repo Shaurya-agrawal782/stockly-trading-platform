@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Universe() {
     return (
       <div className="container">
         <div className="row text-center">
-          <h2 className="mb-4">The Zerodha Universe</h2>
+          <h2 className="mb-4">The Stockly Universe</h2>
           <p>
             Extend your trading and investment experience even further with our
             partner platforms
           </p>
           <div className="col-4 p-5">
-            <img src="/Assets/zerodhaFundhouse.png" className='mb-4'  style={{ width: "50%" }} />
+            <img src="/Assets/stocklyFundhouse.png" className='mb-4'  style={{ width: "50%" }} />
             <p className="text-small text-muted">
               Our asset management venture that is creating simple and
               transparent index funds to help you save for your goals.
@@ -54,7 +55,7 @@ function Universe() {
           </div>
         </div>
         <div className='text-center'>
-        <button class="btn btn-primary mb-5 ">Signup Now For free</button>
+        <Link to="/signup" className="btn btn-primary mb-5">Signup Now For free</Link>
         </div>
       </div>
     );

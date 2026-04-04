@@ -4,28 +4,28 @@ function Hero() {
         <div className="container mt-5 p-5 border-bottom">
             <div className="row text-center">
                 <h1 className='mt-3 mb-3'>Pricing</h1>
-                <p className='text-muted'>Free equity investments and flat ₹20 trady and F&O trades</p>
+                <p className='text-muted'>₹0 long-term investing. Simple flat fees for active trading.</p>
             </div>
             <div className="row text-center mt-3">
             <div className="col-4 p-5">
             <img src="/Assets/pricingEquity.svg" className='mb-4'  style={{ width: "100%" }} />
-            <h4 className='mb-4 '>Free equity delivery</h4>
+            <h4 className='mb-4 '>₹0 Equity Investing</h4>
             <p className="text-small text-muted ">
-              All equity delivery investments (NSE, BSE), are absolutely free — ₹ 0 brokerage.
+              Build long-term portfolios with zero brokerage on equity delivery trades across Indian exchanges.
             </p>
           </div>
           <div className="col-4 p-5 ">
             <img src="/Assets/other-trades.svg" className='mb-4'  style={{ width: "100%" }}/>
-            <h4 className='mb-4 '>Intraday and F&O trades</h4>
+            <h4 className='mb-4 '>Simple Flat Fees for Active Traders</h4>
             <p className="text-small text-muted">
-              Flat ₹ 20 or 0.03% (whichever is lower) per executed order on intraday trades across equity, currency, and commodity trades. Flat ₹20 on all option trades.
+              A low, flat brokerage is applied per executed order for intraday and derivatives trades — designed to keep trading costs predictable.
             </p>
           </div>
           <div className="col-4 p-5">
             <img src="/Assets/pricingEquity.svg"className='mb-4'  style={{ width: "100%" }} />
-            <h4 className='mb-4'>Free direct MF</h4>
+            <h4 className='mb-4'>Direct Mutual Fund Investing</h4>
             <p className="text-small text-muted">
-              All direct mutual fund investments are absolutely free — ₹ 0 commissions & DP charges.
+              Invest in direct mutual funds with no commissions, helping you keep more of your returns over time.
             </p>
           </div>
           </div>

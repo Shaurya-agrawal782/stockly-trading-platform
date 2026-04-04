@@ -21,7 +21,7 @@ function Navbar() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                 
               <Link className="navbar-brand" to='/'>
-                <img src="/Assets/logo.svg" style={{width:"25%"}} alt='logo'  />
+                <img src="/Assets/logo.png" style={{width:"100px"}} alt='logo'  />
               </Link>
               <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3">
                 

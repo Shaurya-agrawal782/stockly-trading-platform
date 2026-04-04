@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
-import axios, { all } from "axios";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import GeneralContext from "./GeneralContext";
 import { VerticalGraph } from "./VerticalGraph";
 
 // import { holdings } from "../data/data";
 
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
+  const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allHoldings").then((res) => {
-      // console.log(res.data);
-      setAllHoldings(res.data);
-    });
+    const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    axios
+      .get(`${backendURL}/holdings`, { withCredentials: true })
+      .then((res) => {
+        setAllHoldings(res.data);
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -59,26 +64,41 @@ const Holdings = () => {
             <th>P&L</th>
             <th>Net chg.</th>
             <th>Day chg.</th>
+            <th>Action</th>
           </tr>
 
           {allHoldings.map((stock, index) => {
-            const curValue = stock.price * stock.qty;
-            const isProfit = curValue - stock.avg * stock.qty >= 0.0;
+            const qty = Number(stock.qty || 0);
+            const avg = Number(stock.avg || 0);
+            const price = Number(stock.price || 0);
+            const curValue = price * qty;
+            const profitLoss = curValue - avg * qty;
+            const isProfit = profitLoss >= 0.0;
             const profClass = isProfit ? "profit" : "loss";
             const dayClass = stock.isLoss ? "loss" : "profit";
+            const netLabel =
+              stock.net || `${avg ? ((price / avg - 1) * 100).toFixed(2) : "0.00"}%`;
+            const dayLabel =
+              stock.day || `${avg ? ((price / avg - 1) * 100).toFixed(2) : "0.00"}%`;
 
             return (
               <tr key={index}>
                 <td>{stock.name}</td>
-                <td>{stock.qty}</td>
-                <td>{stock.avg.toFixed(2)}</td>
-                <td>{stock.price.toFixed(2)}</td>
+                <td>{qty}</td>
+                <td>{avg.toFixed(2)}</td>
+                <td>{price.toFixed(2)}</td>
                 <td>{curValue.toFixed(2)}</td>
-                <td className={profClass}>
-                  {(curValue - stock.avg * stock.qty).toFixed(2)}
+                <td className={profClass}>{profitLoss.toFixed(2)}</td>
+                <td className={profClass}>{netLabel}</td>
+                <td className={dayClass}>{dayLabel}</td>
+                <td className="align-left">
+                  <button
+                    className="btn btn-grey"
+                    onClick={() => generalContext.openBuyWindow(stock.name, "SELL")}
+                  >
+                    Sell
+                  </button>
                 </td>
-                <td className={profClass}>{stock.net}</td>
-                <td className={dayClass}>{stock.day}</td>
               </tr>
             );
           })}

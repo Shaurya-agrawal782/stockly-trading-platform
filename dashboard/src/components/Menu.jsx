@@ -1,25 +1,64 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const [user, setUser] = useState({ username: "Zerodha User", email: "hello@zerodha.com" });
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
   };
 
-  const handleProfileClick = (index) => {
+  const handleProfileClick = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
   };
+
+  const handleLogout = async () => {
+    try {
+      const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+      await fetch(`${backendURL}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+    window.location.href = import.meta.env.VITE_DASHBOARD_URL || "http://localhost:3000";
+  };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+        const response = await fetch(`${backendURL}/`, {
+          method: "POST",
+          credentials: "include",
+        });
+        const data = await response.json();
+        if (data.status && data.user) {
+          setUser({
+            username: data.user.username || "Zerodha User",
+            email: data.user.email || "hello@zerodha.com",
+          });
+        } else {
+          window.location.href = import.meta.env.VITE_FRONTEND_URL || "http://localhost:5173/login";
+        }
+      } catch (error) {
+        console.error("User verification failed:", error);
+        window.location.href = import.meta.env.VITE_FRONTEND_URL || "http://localhost:5173/login";
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const menuClass = "menu";
   const activeMenuClass = "menu selected";
 
   return (
     <div className="menu-container">
-      <img src="logo.png" style={{ width: "50px" }} />
+      <img src="logo.png" style={{ width: "130px" }} alt="Logo" />
       <div className="menus">
         <ul>
           <li>
@@ -69,7 +108,7 @@ const Menu = () => {
           <li>
             <Link
               style={{ textDecoration: "none" }}
-              to="funds"
+              to="/funds"
               onClick={() => handleMenuClick(4)}
             >
               <p className={selectedMenu === 4 ? activeMenuClass : menuClass}>
@@ -77,22 +116,36 @@ const Menu = () => {
               </p>
             </Link>
           </li>
-          <li>
-            <Link
-              style={{ textDecoration: "none" }}
-              to="/apps"
-              onClick={() => handleMenuClick(6)}
-            >
-              <p className={selectedMenu === 6 ? activeMenuClass : menuClass}>
-                Apps
-              </p>
-            </Link>
-          </li>
+          
         </ul>
         <hr />
-        <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+        <div className="profile-dropdown-wrapper">
+          <div className="profile" onClick={handleProfileClick}>
+            <div className="avatar">{user.username?.charAt(0).toUpperCase() || "Z"}</div>
+            <p className="username">{user.username || "USERID"}</p>
+          </div>
+          {isProfileDropdownOpen && (
+            <div className="profile-dropdown">
+              <div className="profile-dropdown-header">
+                <p className="profile-name">{user.username || "Zerodha User"}</p>
+                <p className="profile-email">{user.email || "hello@zerodha.com"}</p>
+              </div>
+              <div className="profile-dropdown-body">
+                <button className="dropdown-item disabled">My profile / Settings</button>
+                <button className="dropdown-item disabled">Console</button>
+                <button className="dropdown-item disabled">Coin</button>
+                <button className="dropdown-item disabled">Support</button>
+                <button className="dropdown-item disabled">Invite friends</button>
+                <button className="dropdown-item disabled">Tour Kite</button>
+                <button className="dropdown-item disabled">Keyboard shortcuts</button>
+                <button className="dropdown-item disabled">Help</button>
+                <hr />
+                <button className="dropdown-item logout" onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

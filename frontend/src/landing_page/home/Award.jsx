@@ -7,32 +7,29 @@ function Award () {
                    <img src='/Assets/largestBroker.svg' className='img-fluid mx-0 mb-4'/>
                 </div>
                 <div className="col-6">
-                     <h1 className='mb-5'>Largest stock broker in India </h1>
-                     <p className='mb-4'>2+ million Zerodha clients contribute to over 15% of all retail order volumes in India daily by trading and investing in: </p>
+                     <h1 className='mb-5'>Trusted by millions of investors</h1>
+                     <p className='mb-4'>Millions of Stockly users actively trade and invest every day across multiple market segments:</p>
                      <div className="row">
                         <div className="col-6">
                      <ul>
                         <li>
-                            <p>Future and Options</p>
+                            <p>Equity & IPO investments</p>
                         </li>
                         <li>
-                            <p>Commodity and Options</p>
+                            <p>Futures & options trading</p>
                         </li>
                         <li>
-                            <p>Currently derivatives</p>
+                            <p>Commodity & currency derivatives</p>
                         </li>
                      </ul>
                         </div>
                         <div className="col-6">
                             <ul>
                         <li>
-                            <p>Stocks & IPOs</p>
-                        </li>
-                        <li>
                             <p>Direct mutual funds</p>
                         </li>
                         <li>
-                            <p>Bonds and Govt.Securities</p>
+                            <p>Bonds & government securities</p>
                         </li>
                      </ul>
 
