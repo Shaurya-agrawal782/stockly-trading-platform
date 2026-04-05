@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const [user, setUser] = useState({ username: "Zerodha User", email: "hello@zerodha.com" });
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser
+      ? JSON.parse(savedUser)
+      : { username: "Zerodha User", email: "hello@zerodha.com" };
+  });
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
@@ -26,6 +31,7 @@ const Menu = () => {
       console.error("Logout failed:", error);
     }
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     window.location.href = import.meta.env.VITE_FRONTEND_URL;
   };
 
@@ -44,6 +50,7 @@ const Menu = () => {
             username: data.user.username || "Zerodha User",
             email: data.user.email || "hello@zerodha.com",
           });
+          localStorage.setItem("user", JSON.stringify(data.user));
         } else {
           window.location.href = import.meta.env.VITE_FRONTEND_URL;
         }
