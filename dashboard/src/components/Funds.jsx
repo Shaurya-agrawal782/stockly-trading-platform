@@ -9,7 +9,7 @@ const Funds = () => {
   const [amount, setAmount] = useState(0);
   const [status, setStatus] = useState("");
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const loadFunds = async () => {
     try {

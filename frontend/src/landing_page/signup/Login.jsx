@@ -26,7 +26,7 @@ function Login() {
     setError('');
 
     try {
-      const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+      const backendURL = import.meta.env.VITE_BACKEND_URL;
       
       const response = await fetch(`${backendURL}/login`, {
         method: 'POST',
@@ -45,7 +45,7 @@ function Login() {
 
       if (data.success) {
         localStorage.setItem('user', JSON.stringify(data.user));
-        window.location.href = import.meta.env.VITE_DASHBOARD_URL || 'http://localhost:3000';
+        window.location.href = import.meta.env.VITE_DASHBOARD_URL;
       } else {
         setError(data.message || 'Login failed');
       }

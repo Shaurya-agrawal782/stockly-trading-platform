@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthentication = async () => {
     try {
-      const response = await fetch('http://localhost:3002/', {
+      const backendURL = import.meta.env.VITE_BACKEND_URL;
+      const response = await fetch(`${backendURL}/`, {
         method: 'POST',
         credentials: 'include',
       });

@@ -16,7 +16,7 @@ const Menu = () => {
 
   const handleLogout = async () => {
     try {
-      const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+      const backendURL = import.meta.env.VITE_BACKEND_URL;
       await fetch(`${backendURL}/logout`, {
         method: "POST",
         credentials: "include",
@@ -24,13 +24,13 @@ const Menu = () => {
     } catch (error) {
       console.error("Logout failed:", error);
     }
-    window.location.href = import.meta.env.VITE_DASHBOARD_URL || "http://localhost:3000";
+    window.location.href = import.meta.env.VITE_DASHBOARD_URL;
   };
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+        const backendURL = import.meta.env.VITE_BACKEND_URL;
         const response = await fetch(`${backendURL}/`, {
           method: "POST",
           credentials: "include",
@@ -42,11 +42,11 @@ const Menu = () => {
             email: data.user.email || "hello@zerodha.com",
           });
         } else {
-          window.location.href = import.meta.env.VITE_FRONTEND_URL || "http://localhost:5173/login";
+          window.location.href = import.meta.env.VITE_FRONTEND_URL;
         }
       } catch (error) {
         console.error("User verification failed:", error);
-        window.location.href = import.meta.env.VITE_FRONTEND_URL || "http://localhost:5173/login";
+        window.location.href = import.meta.env.VITE_FRONTEND_URL;
       }
     };
 

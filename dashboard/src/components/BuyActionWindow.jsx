@@ -16,7 +16,7 @@ const BuyActionWindow = ({ uid, mode = "BUY" }) => {
 
   const handleOrderClick = async () => {
     try {
-      const backendURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3002";
+      const backendURL = import.meta.env.VITE_BACKEND_URL;
       const response = await axios.post(
         `${backendURL}/newOrder`,
         {

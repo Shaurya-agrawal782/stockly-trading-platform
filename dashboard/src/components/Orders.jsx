@@ -8,7 +8,7 @@ const Orders = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
     axios
       .get(`${backendURL}/orders`, { withCredentials: true })
       .then((res) => {

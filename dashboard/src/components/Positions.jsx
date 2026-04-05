@@ -7,7 +7,7 @@ const Positions = () => {
   const [allPositions, setAllPositions] = useState([]);
 
   useEffect(() => {
-    const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
     axios
       .get(`${backendURL}/positions`, { withCredentials: true })
       .then((res) => {

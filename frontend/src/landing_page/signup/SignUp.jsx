@@ -40,7 +40,7 @@ function SignUp() {
     setLoading(true);
 
     try {
-      const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+      const backendURL = import.meta.env.VITE_BACKEND_URL;
       
       const response = await fetch(`${backendURL}/signup`, {
         method: 'POST',
@@ -64,7 +64,7 @@ function SignUp() {
 
       if (data.success) {
         localStorage.setItem('user', JSON.stringify(data.user));
-        window.location.href = import.meta.env.VITE_DASHBOARD_URL || 'http://localhost:3000';
+        window.location.href = import.meta.env.VITE_DASHBOARD_URL;
       } else {
         setError(data.message || 'Signup failed');
       }

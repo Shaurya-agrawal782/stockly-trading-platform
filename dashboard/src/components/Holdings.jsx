@@ -10,7 +10,7 @@ const Holdings = () => {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3002';
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
     axios
       .get(`${backendURL}/holdings`, { withCredentials: true })
       .then((res) => {
