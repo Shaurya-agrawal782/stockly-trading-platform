@@ -11,7 +11,6 @@ const Positions = () => {
     const token = localStorage.getItem("token");
     axios
       .get(`${backendURL}/positions`, {
-        withCredentials: true,
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
       .then((res) => {

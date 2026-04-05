@@ -12,7 +12,6 @@ const Orders = () => {
     const token = localStorage.getItem("token");
     axios
       .get(`${backendURL}/orders`, {
-        withCredentials: true,
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       })
       .then((res) => {

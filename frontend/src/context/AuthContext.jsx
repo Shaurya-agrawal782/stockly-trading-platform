@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
       const backendURL = import.meta.env.VITE_BACKEND_URL;
       const response = await fetch(`${backendURL}/`, {
         method: 'POST',
-        credentials: 'include',
       });
 
       const data = await response.json();

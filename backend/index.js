@@ -18,22 +18,13 @@ const uri = process.env.MONGO_URL;
 
 const app = express();
 
-const extraOrigins = [
-  process.env.FRONTEND_URL,
-  process.env.DASHBOARD_URL,
-].filter(Boolean);
-
-// CORS configuration for credentials
+// CORS configuration
 const corsOptions = {
   origin: [
-    'http://localhost:3000',
-    'http://localhost:5173',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:5173',
-    ...extraOrigins,
+    process.env.FRONTEND_URL,
+    process.env.DASHBOARD_URL,
   ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 

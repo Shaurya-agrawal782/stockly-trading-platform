@@ -27,7 +27,6 @@ const BuyActionWindow = ({ uid, mode = "BUY" }) => {
           mode,
         },
         {
-          withCredentials: true,
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         }
       );

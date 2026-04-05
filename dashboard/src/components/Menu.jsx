@@ -20,7 +20,6 @@ const Menu = () => {
       const token = localStorage.getItem("token");
       await fetch(`${backendURL}/logout`, {
         method: "POST",
-        credentials: "include",
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
     } catch (error) {
@@ -37,7 +36,6 @@ const Menu = () => {
         const token = localStorage.getItem("token");
         const response = await fetch(`${backendURL}/`, {
           method: "POST",
-          credentials: "include",
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await response.json();

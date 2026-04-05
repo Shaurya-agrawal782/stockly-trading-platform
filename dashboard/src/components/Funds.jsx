@@ -15,7 +15,6 @@ const Funds = () => {
   const loadFunds = async () => {
     try {
       const res = await axios.get(`${backendURL}/funds`, {
-        withCredentials: true,
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
       setFunds(res.data);
@@ -53,7 +52,6 @@ const Funds = () => {
         `${backendURL}${endpoint}`,
         { amount: value },
         {
-          withCredentials: true,
           headers: token ? { Authorization: `Bearer ${token}` } : {},
         }
       );

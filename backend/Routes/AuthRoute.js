@@ -24,7 +24,9 @@ const sanitizeUser = (userDoc) => ({
 
 router.post("/", async (req, res) => {
   try {
-    const token = req.cookies?.token;
+    const authHeader = req.headers.authorization || "";
+    const headerToken = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : null;
+    const token = req.cookies?.token || headerToken;
     if (!token) {
       return res.json({ status: false });
     }
