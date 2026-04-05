@@ -11,8 +11,12 @@ const Holdings = () => {
 
   useEffect(() => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const token = localStorage.getItem("token");
     axios
-      .get(`${backendURL}/holdings`, { withCredentials: true })
+      .get(`${backendURL}/holdings`, {
+        withCredentials: true,
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
       .then((res) => {
         setAllHoldings(res.data);
       })

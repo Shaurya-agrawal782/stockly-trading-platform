@@ -8,8 +8,12 @@ const Positions = () => {
 
   useEffect(() => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const token = localStorage.getItem("token");
     axios
-      .get(`${backendURL}/positions`, { withCredentials: true })
+      .get(`${backendURL}/positions`, {
+        withCredentials: true,
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
       .then((res) => {
         setAllPositions(res.data);
       })

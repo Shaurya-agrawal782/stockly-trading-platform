@@ -17,23 +17,28 @@ const Menu = () => {
   const handleLogout = async () => {
     try {
       const backendURL = import.meta.env.VITE_BACKEND_URL;
+      const token = localStorage.getItem("token");
       await fetch(`${backendURL}/logout`, {
         method: "POST",
         credentials: "include",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
     } catch (error) {
       console.error("Logout failed:", error);
     }
-    window.location.href = import.meta.env.VITE_DASHBOARD_URL;
+    localStorage.removeItem("token");
+    window.location.href = import.meta.env.VITE_FRONTEND_URL;
   };
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const backendURL = import.meta.env.VITE_BACKEND_URL;
+        const token = localStorage.getItem("token");
         const response = await fetch(`${backendURL}/`, {
           method: "POST",
           credentials: "include",
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
         });
         const data = await response.json();
         if (data.status && data.user) {

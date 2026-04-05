@@ -64,7 +64,7 @@ router.post("/signup", async (req, res) => {
     const token = createSecretToken(user._id);
     res.cookie("token", token, cookieOptions);
 
-    return res.status(201).json({ success: true, user: sanitizeUser(user) });
+    return res.status(201).json({ success: true, user: sanitizeUser(user), token });
   } catch (error) {
     return res.status(500).json({ success: false, message: "Signup failed." });
   }
@@ -90,7 +90,7 @@ router.post("/login", async (req, res) => {
     const token = createSecretToken(user._id);
     res.cookie("token", token, cookieOptions);
 
-    return res.json({ success: true, user: sanitizeUser(user) });
+    return res.json({ success: true, user: sanitizeUser(user), token });
   } catch (error) {
     return res.status(500).json({ success: false, message: "Login failed." });
   }

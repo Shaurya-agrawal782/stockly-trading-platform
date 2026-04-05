@@ -9,8 +9,12 @@ const Orders = () => {
 
   useEffect(() => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const token = localStorage.getItem("token");
     axios
-      .get(`${backendURL}/orders`, { withCredentials: true })
+      .get(`${backendURL}/orders`, {
+        withCredentials: true,
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
       .then((res) => {
         setTodayOrders(res.data || []);
       })

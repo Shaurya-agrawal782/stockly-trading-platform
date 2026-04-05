@@ -17,6 +17,7 @@ const BuyActionWindow = ({ uid, mode = "BUY" }) => {
   const handleOrderClick = async () => {
     try {
       const backendURL = import.meta.env.VITE_BACKEND_URL;
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         `${backendURL}/newOrder`,
         {
@@ -25,7 +26,10 @@ const BuyActionWindow = ({ uid, mode = "BUY" }) => {
           price: Number(stockPrice),
           mode,
         },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
       );
       if (response.data?.success) {
         setStatusMessage(`${mode} order placed: ${uid} (${stockQuantity})`);

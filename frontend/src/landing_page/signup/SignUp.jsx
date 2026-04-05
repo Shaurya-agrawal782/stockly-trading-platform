@@ -64,7 +64,8 @@ function SignUp() {
 
       if (data.success) {
         localStorage.setItem('user', JSON.stringify(data.user));
-        window.location.href = import.meta.env.VITE_DASHBOARD_URL;
+        window.location.href =
+          `${import.meta.env.VITE_DASHBOARD_URL}?token=${data.token}`;
       } else {
         setError(data.message || 'Signup failed');
       }

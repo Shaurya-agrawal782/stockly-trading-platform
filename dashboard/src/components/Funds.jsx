@@ -10,10 +10,14 @@ const Funds = () => {
   const [status, setStatus] = useState("");
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const token = localStorage.getItem("token");
 
   const loadFunds = async () => {
     try {
-      const res = await axios.get(`${backendURL}/funds`, { withCredentials: true });
+      const res = await axios.get(`${backendURL}/funds`, {
+        withCredentials: true,
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
       setFunds(res.data);
     } catch (err) {
       setError(err.message);
@@ -48,7 +52,10 @@ const Funds = () => {
       const res = await axios.post(
         `${backendURL}${endpoint}`,
         { amount: value },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
       );
 
       if (res.data?.success) {
