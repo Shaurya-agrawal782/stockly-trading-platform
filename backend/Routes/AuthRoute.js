@@ -7,10 +7,12 @@ const { createSecretToken } = require("../util/SecretToken");
 
 const router = express.Router();
 
+const isProduction = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+
 const cookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
-  secure: false,
+  sameSite: isProduction ? "none" : "lax",
+  secure: isProduction,
   maxAge: 3 * 24 * 60 * 60 * 1000,
 };
 
